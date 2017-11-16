@@ -36,6 +36,9 @@ from tensorflow.contrib.keras.python import keras
 from scipy import misc
 import time
 
+#compatibility issue with AWS
+plt.switch_backend('agg')
+
 def make_dir_if_not_exist(path):
     if not os.path.exists(path):
         os.makedirs(path)
@@ -128,7 +131,7 @@ class LoggerPlotter(keras.callbacks.Callback):
     """Callback that accumulates epoch averages of metrics.
     and plots train and validation curves on end of epoch
     """
-    def __init__(self, save_graphs = True):
+    def __init__(self, save_graphs):
         self.hist_dict = {'loss':[], 'val_loss':[]}
         self.save_graphs = save_graphs
         
