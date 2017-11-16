@@ -1,5 +1,7 @@
 from AWS_training_utils import *
 import logging
+import time
+import datetime
 
 '''
 Pass params to training in the form:
@@ -48,7 +50,7 @@ params4 = [0.01,
            'Nadam'
            ]
 
-params_list = [params1, params2, params3, params4]
+params_list = [params4, params2, params3, params1]
 
 def get_weights_file_name(params):
     name = 'weights_{0}_rate_{1}_batch_{2}_epochs_{3}_epoch_steps_{4}_valid_steps_{5}_opt'.format(str(params[0][2:]),
