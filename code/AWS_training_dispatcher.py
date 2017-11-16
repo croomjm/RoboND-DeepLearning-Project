@@ -53,7 +53,7 @@ params4 = [0.01,
 params_list = [params4, params2, params3, params1]
 
 def get_weights_file_name(params):
-    name = 'weights_{0}_rate_{1}_batch_{2}_epochs_{3}_epoch_steps_{4}_valid_steps_{5}_opt'.format(str(params[0][2:]),
+    name = 'weights_{0}_rate_{1}_batch_{2}_epochs_{3}_epoch_steps_{4}_valid_steps_{5}_opt'.format(str(params[0])[2:],
                                                                                                   params[1],
                                                                                                   params[2],
                                                                                                   params[3],
@@ -72,7 +72,7 @@ def get_time():
 
 def main(params_list):
 
-    for p in params:
+    for p in params_list:
         logging.info('Start time: {}'.format(datetime.datetime.now()))
         logging.info('Parameters: {}'.format(return_params(p)))
         logging.info('Training model')
@@ -81,6 +81,8 @@ def main(params_list):
 
         logging.info('Save weights to filename: {}'.format(weights_file_name))
 
+        p.append(weights_file_name)
+
         train_model(*p)
 
         logging.info('Finished model training at {}'.format(datetime.datetime.now()))
@@ -88,10 +90,26 @@ def main(params_list):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(filename='{}.log'.format(get_time()),level=logging.INFO)
+    # set up logging to file - see previous section for more details
+    logging.basicConfig(level=logging.INFO,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M',
+                    filename='{}.log'.format(get_time()),
+                    filemode='w')
+    #logging.basicConfig(filename='{}.log'.format(get_time()),level=logging.INFO)
+
+    # define a Handler which writes INFO messages or higher to the sys.stderr
+    console = logging.StreamHandler()
+    console.setLevel(logging.INFO)
+    # set a format which is simpler for console use
+    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+    # tell the handler to use this format
+    console.setFormatter(formatter)
+    # add the handler to the root logger
+    logging.getLogger('').addHandler(console)
 
     try:
-        main()
+        main(params_list)
     except Exception as e:
         logging.critical(e)
         logging.critical('Stopped execution at {}'.format(datetime.datetime.now()))
