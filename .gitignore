@@ -103,3 +103,10 @@ ENV/
 
 RUNS/
 
+#quadsim program
+*.app
+
+#training/validation images
+/data/train
+/data/validation
+/data/sample_evaluation_data
