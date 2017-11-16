@@ -53,13 +53,16 @@ params4 = [0.01,
 params_list = [params4, params2, params3, params1]
 
 def get_weights_file_name(params):
-    name = 'weights_{0}_rate_{1}_batch_{2}_epochs_{3}_epoch_steps_{4}_valid_steps_{5}_opt'.format(str(params[0])[2:],
+    name = 'weights_{0}_rate_{1}_batch_{2}_epochs_{3}_epoch_steps_{4}_valid_steps_{5}_opt_{6}'.format(str(params[0])[2:],
                                                                                                   params[1],
                                                                                                   params[2],
                                                                                                   params[3],
                                                                                                   params[4],
-                                                                                                  params[6]
+                                                                                                  params[6],
+                                                                                                  get_time()
                                                                                                   )
+
+    return name
 
 def return_params(params):
     params_string = ['Learning Rate: ', 'Batches: ', 'Num Epochs: ', 'Steps per Epoch: ', 'Validation Steps: ', 'Workers: ', 'Optimizer: ']

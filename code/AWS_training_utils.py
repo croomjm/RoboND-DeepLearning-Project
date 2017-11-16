@@ -104,7 +104,7 @@ def train_model(learning_rate, batch_size, num_epochs, steps_per_epoch, validati
                                                  data_folder=os.path.join('..', 'data', 'validation'),
                                                  image_shape=image_shape)
 
-    logger_cb = plotting_tools.LoggerPlotter()
+    logger_cb = plotting_tools.LoggerPlotter(save_graphs = True)
     callbacks = [logger_cb]
 
     model.fit_generator(train_iter,
