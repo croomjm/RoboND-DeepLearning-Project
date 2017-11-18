@@ -123,7 +123,7 @@ class model_results(object):
 
         # And the final grade score is 
         final_score = final_IoU * weight
-        self.data['Scores']['Overall']['Score']
+        self.data['Scores']['Overall']['Score'] = final_score
 
         print('Model Results for {}:'.format(self.data['File Name']))
         print('    Weight: {}'.format(weight))
