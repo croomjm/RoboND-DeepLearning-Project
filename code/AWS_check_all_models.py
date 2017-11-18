@@ -13,7 +13,7 @@ class model_results(object):
         file_name = 'results_{}.json'.format(weight_file_name)
         if file_name in directory:
             print('Opening existing model results file.')
-            with open(directory + '/' + file_name, 'r') as fp:
+            with open('../data/weights/' + file_name, 'r') as fp:
                 self.data = json.load(fp)
         else:
             #set model parameters based on file name
