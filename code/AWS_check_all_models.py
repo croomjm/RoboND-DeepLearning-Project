@@ -24,7 +24,7 @@ class model_results(object):
             self.score_model(self.model, predictions)
 
             #export processed sample interpreted images to folder
-            self.export_run(self.model)
+            self.export_run(weight_file_name ,self.model)
 
     def save_model_results(self):
         print('Saving model results for {} to file.'.format(self.data['file_name']))
