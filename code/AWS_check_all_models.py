@@ -30,7 +30,7 @@ class model_results(object):
             self.export_run(weight_file_name ,self.model)
 
     def save_model_results(self):
-        print('Saving model results for {} to file.'.format(self.data['file_name']))
+        print('Saving model results for {} to file.'.format(self.data['File Name']))
         with open('../data/weights/results_{}.json'.format(self.data['File Name']), 'w') as fp:
             json.dumps(self.data, fp, indent = 4, sort_keys = True)
 
