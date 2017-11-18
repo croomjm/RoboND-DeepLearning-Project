@@ -4,6 +4,7 @@ import time
 
 from utils import scoring_utils
 from utils import model_tools
+from utils.separable_conv2d import SeparableConv2DKeras, BilinearUpSampling2D
 
 class model_results(object):
     def __init__(self,weight_file_name):
