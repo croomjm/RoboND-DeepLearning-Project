@@ -168,7 +168,7 @@ def generate_github_md_summary_results_table(results_list):
                     item = str(r[c])
                 row += '| ' + item + ' '
 
-            row += '|'
+        row += '|'
         content.append(row)
 
     return content
@@ -176,10 +176,10 @@ def generate_github_md_summary_results_table(results_list):
 def generate_github_md_detailed_results_table(results_list):
     #table with false negatives, false positives, etc. but not model parameters
     header_cols = ['',
-                    'Overall\nScore',
-                    'Following Target\nTrue Positives','Following Target\nFalse Positives','Following Target\nFalse Negatives',
-                    'No Target\nTrue Positives','No Target\nFalse Positives','No Target\nFalse Negatives',
-                    'Far from Target\nTrue Positives','Far from Target\nFalse Positives','Far from Target\nFalse Negatives',
+                    'Overall<br>Score',
+                    'Following Target<br>True Positives','Following Target<br>False Positives','Following Target<br>False Negatives',
+                    'No Target<br>True Positives','No Target<br>False Positives','No Target<br>False Negatives',
+                    'Far from Target<br>True Positives','Far from Target<br>False Positives','Far from Target<br>False Negatives',
                     ]
 
     header_row = '| ' + ' | '.join(header_cols) + ' |'
@@ -192,14 +192,14 @@ def generate_github_md_detailed_results_table(results_list):
             if c == '':
                 row += '| ' + str(i) + ' '
             else:
-                key1, key2 = c.split('\n')
+                key1, key2 = c.split('<br>')
                 if isinstance(r['Scores'][key1][key2], float):
                     item = str(round(r['Scores'][key1][key2], 3))
                 else:
                     item = str(r['Scores'][key1][key2])
                 row += '| ' + item + ' '
 
-            row += '|'
+        row += '|'
         content.append(row)
 
     return content
