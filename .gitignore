@@ -108,5 +108,9 @@ RUNS/
 
 #training/validation images
 /data/train
+/data/additional_train
 /data/validation
 /data/sample_evaluation_data
+
+#raw data from simulator
+/data/raw_sim_data
