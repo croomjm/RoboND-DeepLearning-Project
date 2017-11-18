@@ -174,7 +174,7 @@ def generate_github_md_summary_results_table(results_list):
 def generate_github_md_detailed_results_table(results_list):
     #table with false negatives, false positives, etc. but not model parameters
     header_cols = ['',
-                    'Overall\nScore'
+                    'Overall\nScore',
                     'Following Target\nTrue Positives','Following Target\nFalse Positives','Following Target\nFalse Negatives',
                     'No Target\nTrue Positives','No Target\nFalse Positives','No Target\nFalse Negatives',
                     'Far from Target\nTrue Positives','Far from Target\nFalse Positives','Far from Target\nFalse Negatives',
