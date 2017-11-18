@@ -163,7 +163,7 @@ def generate_github_md_summary_results_table(results_list):
                 row += '| ' + '{0:0.3f}'.format(r['Scores']['Overall'][c]) + ' |'
             else:
                 if isinstance(r[c], float):
-                    item = round(r[c], 3)
+                    item = str(round(r[c], 3))
                 else:
                     item = str(r[c])
                 row += '| ' + item + ' |'
@@ -192,7 +192,7 @@ def generate_github_md_detailed_results_table(results_list):
             else:
                 key1, key2 = c.split('\n')
                 if isinstance(r['Scores'][key1][key2], float):
-                    item = round(r['Scores'][key1][key2], 3)
+                    item = str(round(r['Scores'][key1][key2], 3))
                 else:
                     item = str(r['Scores'][key1][key2])
                 row += '| ' + item + ' |'
