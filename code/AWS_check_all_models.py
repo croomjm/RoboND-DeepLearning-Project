@@ -82,6 +82,7 @@ class model_results(object):
         print('Scoring Model...')
         # Scores for while the quad is following behind the target. 
         true_pos1, false_pos1, false_neg1, iou1 = scoring_utils.score_run_iou(val_following, pred_following)
+        self.data['Scores']['Following Target'] = {}
         self.data['Scores']['Following Target']['True Positives'] = true_pos1
         self.data['Scores']['Following Target']['False Positives'] = false_pos1
         self.data['Scores']['Following Target']['False Negatives'] = false_neg1
@@ -89,6 +90,7 @@ class model_results(object):
 
         # Scores for images while the quad is on patrol and the target is not visable
         true_pos2, false_pos2, false_neg2, iou2 = scoring_utils.score_run_iou(val_no_targ, pred_no_targ)
+        self.data['Scores']['No Target'] = {}
         self.data['Scores']['No Target']['True Positives'] = true_pos2
         self.data['Scores']['No Target']['False Positives'] = false_pos2
         self.data['Scores']['No Target']['False Negatives'] = false_neg2
@@ -96,12 +98,14 @@ class model_results(object):
 
         # This score measures how well the neural network can detect the target from far away
         true_pos3, false_pos3, false_neg3, iou3 = scoring_utils.score_run_iou(val_with_targ, pred_with_targ)
+        self.data['Scores']['Far from Target'] = {}
         self.data['Scores']['Far from Target']['True Positives'] = true_pos3
         self.data['Scores']['Far from Target']['False Positives'] = false_pos3
         self.data['Scores']['Far from Target']['False Negatives'] = false_neg3
         self.data['Scores']['Far from Target']['IOU'] = iou3
 
         # Sum all the true positives, etc from the three datasets to get a weight for the score
+        self.data['Scores']['Overall'] = {}
         self.data['Scores']['Overall']['True Positives'] = true_pos1 + true_pos2 + true_pos3
         self.data['Scores']['Overall']['False Positives'] = false_pos1 + false_pos2 + false_pos3
         self.data['Scores']['Overall']['False Negatives'] = false_neg1 + false_neg2 + false_neg3
