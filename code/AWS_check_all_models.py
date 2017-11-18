@@ -20,10 +20,10 @@ class model_results(object):
             self.parse_file_name(weight_file_name)
 
             self.model = self.load_model(weight_file_name)
-            self.score_model(model)
+            self.score_model(self.model)
 
             #export processed sample interpreted images to folder
-            self.export_run(model)
+            self.export_run(self.model)
 
     def save_model_results(self):
         print('Saving model results for {} to file.'.format(self.data['file_name']))
