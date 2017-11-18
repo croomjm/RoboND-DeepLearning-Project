@@ -110,6 +110,10 @@ class model_results(object):
         self.data['Scores']['Overall']['False Positives'] = false_pos1 + false_pos2 + false_pos3
         self.data['Scores']['Overall']['False Negatives'] = false_neg1 + false_neg2 + false_neg3
 
+        true_pos = true_pos1 + true_pos2 + true_pos3
+        false_neg = false_neg1 + false_neg2 + false_neg3
+        false_pos = false_pos1 + false_pos2 + false_pos3
+
         weight = true_pos/(true_pos+false_neg+false_pos)
         self.data['Scores']['Overall']['Weight'] = weight
 
