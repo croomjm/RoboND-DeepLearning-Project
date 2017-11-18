@@ -23,6 +23,9 @@ class model_results(object):
             predictions = self.write_predictions(self.model, weight_file_name)
             self.score_model(self.model, predictions)
 
+            #save results data to json file in weights folder
+            self.save_model_results()
+
             #export processed sample interpreted images to folder
             self.export_run(weight_file_name ,self.model)
 
