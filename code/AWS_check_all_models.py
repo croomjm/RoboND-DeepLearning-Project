@@ -134,7 +134,7 @@ class model_results(object):
         print('    Final Score: {}'.format(final_score))
 
 def sort_models_by_score(results_list):
-    return results_list.sorted(key = lambda result: result['Scores']['Overall']['Score'])
+    return sorted(results_list, key = lambda result: result['Scores']['Overall']['Score'])
 
 def generate_github_md_results_tables(results_list):
     print('Saving model results table to file.')
