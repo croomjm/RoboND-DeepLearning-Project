@@ -25,7 +25,7 @@ class model_results(object):
             self.export_run(model)
 
     def save_model_results(self):
-        print('Saving model results for self.data['file_name'] to file.')
+        print('Saving model results for {} to file.'.format(self.data['file_name']))
         with open('../data/weights/results_{}.json'.format(self.data['File Name']), 'w') as fp:
             json.dumps(self.data, fp, indent = 4, sort_keys = True)
 
@@ -136,7 +136,7 @@ def generate_github_md_summary_results_table(results_list):
 
     return content
 
-def generate_github_md_detailed_results_table(results_list)
+def generate_github_md_detailed_results_table(results_list):
     #table with false negatives, false positives, etc. but not model parameters
     header_cols = ['',
                     'Overall\nScore'
