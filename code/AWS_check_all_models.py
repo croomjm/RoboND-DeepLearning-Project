@@ -119,7 +119,7 @@ class model_results(object):
 
         # The IoU for the dataset that never includes the hero is excluded from grading
         final_IoU = (iou1 + iou3)/2
-        self.data['Scores']['Overall']['IOU']
+        self.data['Scores']['Overall']['IOU'] = final_IoU
 
         # And the final grade score is 
         final_score = final_IoU * weight
