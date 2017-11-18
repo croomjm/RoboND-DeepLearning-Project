@@ -206,7 +206,9 @@ def main():
         results_list.append(results.data)
 
     print('Sorting results by score.')
+    print('Unsorted results list {}'.format('\n'.join(results_list)))
     results_list = sort_models_by_score(results_list)
+    print('Sorted results list {}'.format('\n'.join(results_list)))
 
     print('Generating github md results summary tables.')
     generate_github_md_results_tables(results_list)
