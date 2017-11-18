@@ -160,9 +160,13 @@ def generate_github_md_summary_results_table(results_list):
             if c == '':
                 row += '| ' + str(i) + ' |'
             elif c == 'IOU' or c == 'Score':
-                row += '| ' + r['Scores']['Overall'][c] + ' |'
+                row += '| ' + {0:0.3f}.format(r['Scores']['Overall'][c]) + ' |'
             else:
-                row += '| ' + r[c] + ' |'
+                if isInstance(r[c], float):
+                    item = round(r[c], 3)
+                else:
+                    item = str(r[c])
+                row += '| ' + item + ' |'
         content.append(row)
 
     return content
@@ -187,7 +191,11 @@ def generate_github_md_detailed_results_table(results_list):
                 row += '| ' + str(i) + ' |'
             else:
                 key1, key2 = c.split('\n')
-                row += '| ' + r['Scores'][key1][key2] + ' |'
+                if isInstance(r['Scores'][key1][key2], float):
+                    item = round(r['Scores'][key1][key2], 3)
+                else:
+                    item = str(r['Scores'][key1][key2])
+                row += '| ' + item + ' |'
         content.append(row)
 
     return content
