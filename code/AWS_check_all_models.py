@@ -13,7 +13,7 @@ class model_results(object):
         file_name = 'results_{}.json'.format(weight_file_name)
         if file_name in directory:
             print('Opening existing model results file.')
-            with open(file_name, 'r') as fp:
+            with open(directory + '/' + file_name, 'r') as fp:
                 self.data = json.load(fp)
         else:
             #set model parameters based on file name
@@ -209,9 +209,9 @@ def main():
         results_list.append(results.data)
 
     print('Sorting results by score.')
-    print('Unsorted results list {}'.format('\n'.join(results_list)))
+    print('Unsorted results list {}'.format(results_list))
     results_list = sort_models_by_score(results_list)
-    print('Sorted results list {}'.format('\n'.join(results_list)))
+    print('Sorted results list {}'.format(results_list))
 
     print('Generating github md results summary tables.')
     generate_github_md_results_tables(results_list)
