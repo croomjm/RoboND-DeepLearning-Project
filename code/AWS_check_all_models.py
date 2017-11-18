@@ -162,6 +162,7 @@ def generate_github_md_detailed_results_table(results_list):
     return content
 
 def main():
+    print('Finding weights files.')
     directory = os.listdir('../data/weights')
     weight_files = []
     results_list = []
@@ -170,15 +171,20 @@ def main():
         if parsed_file_name[0] == weights and len(parsed_file_name) == 16:
             weight_files.append(f)
 
+    print('Weight Files:\n{}'.format('\n'.join(weight_files)))
     for f in weight_files:
+        print('Calculating results for {}'.format(f))
         results = model_results(f)
         results_list.append(results.data)
 
+    print('Sorting results by score.')
     results_list = sort_models_by_score(results_list)
 
+    print('Generating github md results summary tables.')
     generate_github_md_results_tables(results_list)
 
 if __name__ == '__main__':
+    print('Starting main function.')
     main()
 
 
