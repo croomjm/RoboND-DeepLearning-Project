@@ -20,7 +20,8 @@ class model_results(object):
             self.parse_file_name(weight_file_name)
 
             self.model = self.load_model(weight_file_name)
-            self.score_model(self.model)
+            predictions = self.write_predictions(model, weight_file_name)
+            self.score_model(self.model, predictions)
 
             #export processed sample interpreted images to folder
             self.export_run(self.model)
@@ -59,7 +60,25 @@ class model_results(object):
         val_following, pred_following = model_tools.write_predictions_grade_set(model,
                                                 run_num,'following_images', 'sample_evaluation_data')
 
-    def score_model(self, model):
+    def write_predictions(self, model, weight_file_name):
+        #write predictions for various scenarios to file, return path to files for each scenario
+
+        run_num = 'run_{}'.format(weight_file_name)
+
+        val_with_targ, pred_with_targ = model_tools.write_predictions_grade_set(model,
+                                                run_num,'patrol_with_targ', 'sample_evaluation_data') 
+
+        val_no_targ, pred_no_targ = model_tools.write_predictions_grade_set(model, 
+                                                run_num,'patrol_non_targ', 'sample_evaluation_data') 
+
+        val_following, pred_following = model_tools.write_predictions_grade_set(model,
+                                                run_num,'following_images', 'sample_evaluation_data')
+
+        return [val_with_targ, pred_with_targ, val_no_targ, pred_no_targ, val_following, pred_following]
+
+    def score_model(self, model, predictions):
+        val_with_targ, pred_with_targ, val_no_targ, pred_no_targ, val_following, pred_following = predictions
+        
         print('Scoring Model...')
         # Scores for while the quad is following behind the target. 
         true_pos1, false_pos1, false_neg1, iou1 = scoring_utils.score_run_iou(val_following, pred_following)
