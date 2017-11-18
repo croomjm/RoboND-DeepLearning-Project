@@ -160,7 +160,7 @@ def generate_github_md_summary_results_table(results_list):
             if c == '':
                 row += '| ' + str(i) + ' |'
             elif c == 'IOU' or c == 'Score':
-                row += '| ' + {0:0.3f}.format(r['Scores']['Overall'][c]) + ' |'
+                row += '| ' + '{0:0.3f}'.format(r['Scores']['Overall'][c]) + ' |'
             else:
                 if isInstance(r[c], float):
                     item = round(r[c], 3)
