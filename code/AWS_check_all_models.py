@@ -179,10 +179,7 @@ def main():
     generate_github_md_results_tables(results_list)
 
 if __name__ == '__main__':
-    try:
-        main()
-    except:
-        pass
+    main()
 
 
 
