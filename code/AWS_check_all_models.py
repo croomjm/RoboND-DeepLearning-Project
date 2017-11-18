@@ -168,7 +168,7 @@ def main():
     results_list = []
     for f in directory:
         parsed_file_name = f.split('_')
-        if parsed_file_name[0] == weights and len(parsed_file_name) == 16:
+        if parsed_file_name[0] == 'weights' and len(parsed_file_name) == 16:
             weight_files.append(f)
 
     print('Weight Files:\n{}'.format('\n'.join(weight_files)))
