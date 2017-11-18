@@ -142,6 +142,7 @@ def generate_github_md_results_tables(results_list):
     content = generate_github_md_summary_results_table(results_list)
     content.append('\n')
     content.extend(generate_github_md_detailed_results_table(results_list))
+    print(content)
 
     with open('../project_submission/results_table_{}'.format(time.strftime("%Y%m%d-%H%M%S")), 'w') as text_file:
         text_file.write('\n'.join(content))
@@ -153,7 +154,7 @@ def generate_github_md_summary_results_table(results_list):
     header_row = '| ' + ' | '.join(header_cols) + ' |'
     header_underline = '|:---:'*len(header_cols) + '|'
 
-    content = [header_cols, header_underline]
+    content = [header_row, header_underline]
     for i,r in enumerate(results_list):
         row = ''
         for c in header_cols:
@@ -182,7 +183,7 @@ def generate_github_md_detailed_results_table(results_list):
 
     header_row = '| ' + ' | '.join(header_cols) + ' |'
     header_underline = '|:---:'*len(header_cols) + '|'
-    content = [header_cols, header_underline]
+    content = [header_row, header_underline]
 
     for i,r in enumerate(results_list):
         row = ''
