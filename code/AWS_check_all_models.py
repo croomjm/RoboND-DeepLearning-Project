@@ -207,8 +207,6 @@ def generate_github_md_detailed_results_table(results_list):
                 row += '| ' + str(i+1) + ' '
             else:
                 key1, key2 = c.split('<br>')
-                print('Key 1:{}, Key 2:{}'.format(key1, key2))
-                print('r["Scores"][key1]: {}'.format(r['Scores'][key1]))
                 if key2 == 'Score':
                     item = str(round(r['Scores'][key1][key2], 3))
                 elif isinstance(r['Scores'][key1][key2], float):
