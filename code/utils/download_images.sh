@@ -15,7 +15,7 @@ mv ~/RoboND-DeepLearning-Project/data/train_combined ~/RoboND-DeepLearning-Proje
 echo "Do you wish to download supplemental training data?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) ./~/RoboND-DeepLearning-Project/code/utils/download_supplemental_training_data.sh; break;;
+        Yes ) ~/RoboND-DeepLearning-Project/code/utils/download_supplemental_training_data.sh; break;;
         No ) exit;;
     esac
 done
@@ -23,7 +23,7 @@ done
 echo "Do you wish to download supplemental validation data?"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) ./~/RoboND-DeepLearning-Project/code/utils/download_supplemental_validation_data.sh; break;;
+        Yes ) ~/RoboND-DeepLearning-Project/code/utils/download_supplemental_validation_data.sh; break;;
         No ) exit;;
     esac
 done
