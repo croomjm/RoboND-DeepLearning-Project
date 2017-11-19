@@ -105,6 +105,7 @@ def plot_keras_model(model, fig_name):
 
 
 def train_val_curve(save_graphs, train_loss, val_loss=None):
+    plt.figure()
     train_line = plt.plot(train_loss, label='train_loss')
     train_patch = mpatches.Patch(color='blue',label='train_loss')
     handles = [train_patch]
