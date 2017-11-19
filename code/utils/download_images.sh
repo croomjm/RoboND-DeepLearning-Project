@@ -20,4 +20,12 @@ select yn in "Yes" "No"; do
     esac
 done
 
+echo "Do you wish to download supplemental validation data?"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) ./~/RoboND-DeepLearning-Project/code/utils/download_supplemental_validation_data.sh; break;;
+        No ) exit;;
+    esac
+done
+
 

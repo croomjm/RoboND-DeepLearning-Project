@@ -19,38 +19,29 @@ Pass params to training in the form:
 
 params1 = [0.01,
            64,
-           15,
-           500,
+           20,
+           400,
            50,
            2,
-           'Adam']
+           'Nadam']
 
-params2 = [0.01,
-           128,
-           15,
-           500,
+params2 = [0.005,
+           64,
+           20,
+           400,
            50,
            2,
-           'Adam']
+           'Nadam']
 
-params3 = [0.01,
-           256,
-           15,
-           500,
+params3 = [0.002,
+           64,
+           25,
+           400,
            50,
            2,
-           'Adam']
+           'Nadam']
 
-params4 = [0.01,
-           256,
-           15,
-           500,
-           50,
-           2,
-           'Nadam'
-           ]
-
-params_list = [params4, params2, params3, params1]
+params_list = [params1, params2, params3]
 
 def get_weights_file_name(params):
     name = 'weights_{0}_rate_{1}_batch_{2}_epochs_{3}_epoch_steps_{4}_valid_steps_{5}_opt_{6}'.format(str(params[0])[2:],
