@@ -85,7 +85,7 @@ class model_results(object):
         print('Scoring Model...')
         # Scores for while the quad is following behind the target. 
         true_pos1, false_pos1, false_neg1, iou1 = scoring_utils.score_run_iou(val_following, pred_following)
-        total1 = true_pos1 + false_pos1 + false_neg1
+        total1 = 543.
         self.data['Scores']['Following Target'] = {}
         self.data['Scores']['Following Target']['True Positives'] = true_pos1
         self.data['Scores']['Following Target']['False Positives'] = false_pos1
@@ -97,7 +97,7 @@ class model_results(object):
 
         # Scores for images while the quad is on patrol and the target is not visable
         true_pos2, false_pos2, false_neg2, iou2 = scoring_utils.score_run_iou(val_no_targ, pred_no_targ)
-        total2 = true_pos2 + false_pos2 + false_neg2
+        total2 = 271.
         self.data['Scores']['No Target'] = {}
         self.data['Scores']['No Target']['True Positives'] = true_pos2
         self.data['Scores']['No Target']['False Positives'] = false_pos2
@@ -109,7 +109,7 @@ class model_results(object):
 
         # This score measures how well the neural network can detect the target from far away
         true_pos3, false_pos3, false_neg3, iou3 = scoring_utils.score_run_iou(val_with_targ, pred_with_targ)
-        total3 = true_pos3 + false_pos3 + false_neg3
+        total3 = 323.
         self.data['Scores']['Far from Target'] = {}
         self.data['Scores']['Far from Target']['True Positives'] = true_pos3
         self.data['Scores']['Far from Target']['False Positives'] = false_pos3
@@ -130,7 +130,7 @@ class model_results(object):
         self.data['Scores']['Overall']['False Negatives'] = false_neg
         self.data['Scores']['Overall']['Percent False Positives'] = false_pos/total
         self.data['Scores']['Overall']['Percent False Negatives'] = false_neg/total
-        self.data['Scores']['Overall']['Percent True Positives'] = true_neg/total
+        self.data['Scores']['Overall']['Percent True Positives'] = true_pos/total
 
         weight = true_pos/(true_pos+false_neg+false_pos)
         self.data['Scores']['Overall']['Weight'] = weight
