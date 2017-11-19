@@ -32,7 +32,7 @@ class model_results(object):
     def save_model_results(self):
         print('Saving model results for {} to file.'.format(self.data['File Name']))
         with open('../data/weights/results_{}.json'.format(self.data['File Name']), 'w') as fp:
-            json.dump(self.data, fp, indent = 4, sort_keys = True, reverse = True)
+            json.dump(self.data, fp, indent = 4, sort_keys = True)
 
     def parse_file_name(self, weight_file_name):
         keys = ['Learning Rate', 'Batch Size', 'Epochs', 'Steps per Epoch', 'Validation Steps', 'Optimizer', 'Date Code']
@@ -149,7 +149,7 @@ class model_results(object):
         print('    Final Score: {}'.format(final_score))
 
 def sort_models_by_score(results_list):
-    return sorted(results_list, key = lambda result: result['Scores']['Overall']['Score'])
+    return sorted(results_list, key = lambda result: result['Scores']['Overall']['Score'], , reverse = True)
 
 def generate_github_md_results_tables(results_list):
     print('Saving model results table to file.')
