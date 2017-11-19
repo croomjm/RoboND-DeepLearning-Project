@@ -1,0 +1,24 @@
+|  | Learning Rate | Batch Size | Epochs | Steps per Epoch | Validation Steps | Optimizer | IOU | Score |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 0 | 0.002 | 128 | 15 | 500 | 50 | Adam | 0.501 | 0.361 |
+| 1 | 0.01 | 64 | 15 | 500 | 50 | Adam | 0.505 | 0.363 |
+| 2 | 0.01 | 128 | 15 | 500 | 50 | Adam | 0.506 | 0.370 |
+| 3 | 0.01 | 256 | 15 | 500 | 50 | Adam | 0.518 | 0.377 |
+| 4 | 0.002 | 64 | 15 | 500 | 50 | Adam | 0.535 | 0.386 |
+| 5 | 0.005 | 64 | 15 | 400 | 50 | Adam | 0.539 | 0.389 |
+| 6 | 0.01 | 256 | 15 | 500 | 50 | Nadam | 0.529 | 0.390 |
+| 7 | 0.005 | 128 | 15 | 400 | 50 | Adam | 0.537 | 0.392 |
+| 8 | 0.005 | 64 | 15 | 400 | 50 | Nadam | 0.535 | 0.405 |
+
+
+|  | Overall<br>Score | Following Target<br>True Positives | Following Target<br>False Positives | Following Target<br>False Negatives | No Target<br>True Positives | No Target<br>False Positives | No Target<br>False Negatives | Far from Target<br>True Positives | Far from Target<br>False Positives | Far from Target<br>False Negatives |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 0 | 0.361 | 539 | 0 | 0 | 0 | 37 | 0 | 93 | 1 | 208 |
+| 1 | 0.363 | 538 | 0 | 1 | 0 | 44 | 0 | 99 | 1 | 202 |
+| 2 | 0.37 | 539 | 0 | 0 | 0 | 28 | 0 | 97 | 1 | 204 |
+| 3 | 0.377 | 539 | 0 | 0 | 0 | 46 | 0 | 106 | 2 | 195 |
+| 4 | 0.386 | 539 | 0 | 0 | 0 | 77 | 0 | 123 | 1 | 178 |
+| 5 | 0.389 | 539 | 0 | 0 | 0 | 65 | 0 | 116 | 3 | 185 |
+| 6 | 0.39 | 539 | 0 | 0 | 0 | 35 | 0 | 107 | 2 | 194 |
+| 7 | 0.392 | 539 | 0 | 0 | 0 | 51 | 0 | 113 | 1 | 188 |
+| 8 | 0.405 | 539 | 0 | 0 | 0 | 44 | 0 | 130 | 1 | 171 |
