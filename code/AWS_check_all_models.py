@@ -92,7 +92,7 @@ class model_results(object):
         self.data['Scores']['Following Target']['False Negatives'] = false_neg1
         self.data['Scores']['Following Target']['IOU'] = iou1
         self.data['Scores']['Following Target']['Percent False Positives'] = false_pos1/total1
-        self.data['Scores']['Following Target']['Percent False Negative'] = false_neg1/total1
+        self.data['Scores']['Following Target']['Percent False Negatives'] = false_neg1/total1
         self.data['Scores']['Following Target']['Percent True Positives'] = true_pos1/total1
 
         # Scores for images while the quad is on patrol and the target is not visable
