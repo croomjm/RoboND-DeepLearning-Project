@@ -104,7 +104,7 @@ class model_results(object):
         self.data['Scores']['No Target']['False Negatives'] = false_neg2
         self.data['Scores']['No Target']['IOU'] = iou2
         self.data['Scores']['No Target']['Percent False Positives'] = false_pos2/total2
-        self.data['Scores']['No Target']['Percent False Negative'] = false_neg2/total2
+        self.data['Scores']['No Target']['Percent False Negatives'] = false_neg2/total2
         self.data['Scores']['No Target']['Percent True Positives'] = true_pos2/total2
 
         # This score measures how well the neural network can detect the target from far away
@@ -116,7 +116,7 @@ class model_results(object):
         self.data['Scores']['Far from Target']['False Negatives'] = false_neg3
         self.data['Scores']['Far from Target']['IOU'] = iou3
         self.data['Scores']['Far from Target']['Percent False Positives'] = false_pos3/total3
-        self.data['Scores']['Far from Target']['Percent False Negative'] = false_neg3/total3
+        self.data['Scores']['Far from Target']['Percent False Negatives'] = false_neg3/total3
         self.data['Scores']['Far from Target']['Percent True Positives'] = true_pos3/total3
 
         # Sum all the true positives, etc from the three datasets to get a weight for the score
@@ -129,7 +129,7 @@ class model_results(object):
         self.data['Scores']['Overall']['False Positives'] = false_pos
         self.data['Scores']['Overall']['False Negatives'] = false_neg
         self.data['Scores']['Overall']['Percent False Positives'] = false_pos/total
-        self.data['Scores']['Overall']['Percent False Negative'] = false_neg/total
+        self.data['Scores']['Overall']['Percent False Negatives'] = false_neg/total
         self.data['Scores']['Overall']['Percent True Positives'] = true_neg/total
 
         weight = true_pos/(true_pos+false_neg+false_pos)
@@ -207,9 +207,13 @@ def generate_github_md_detailed_results_table(results_list):
                 row += '| ' + str(i+1) + ' '
             else:
                 key1, key2 = c.split('<br>')
+                print('Key 1:{}, Key 2:{}'.format(key1, key2))
+                print('r[key1]: {}'.format(r[key1]))
                 if key2 == 'Score':
                     item = str(round(r['Scores'][key1][key2], 3))
                 elif isinstance(r['Scores'][key1][key2], float):
+                    print(key1)
+                    print(r['Scores']['key1'])
                     item = str(round(r['Scores'][key1][key2]*100, 3))+'%'
                 else:
                     item = str(r['Scores'][key1][key2])
