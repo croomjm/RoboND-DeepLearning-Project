@@ -32,7 +32,7 @@ class model_results(object):
     def save_model_results(self):
         print('Saving model results for {} to file.'.format(self.data['File Name']))
         with open('../data/weights/results_{}.json'.format(self.data['File Name']), 'w') as fp:
-            json.dump(self.data, fp, indent = 4, sort_keys = True, reversed = True)
+            json.dump(self.data, fp, indent = 4, sort_keys = True, reverse = True)
 
     def parse_file_name(self, weight_file_name):
         keys = ['Learning Rate', 'Batch Size', 'Epochs', 'Steps per Epoch', 'Validation Steps', 'Optimizer', 'Date Code']
