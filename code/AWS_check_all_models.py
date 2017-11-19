@@ -149,7 +149,7 @@ class model_results(object):
         print('    Final Score: {}'.format(final_score))
 
 def sort_models_by_score(results_list):
-    return sorted(results_list, key = lambda result: result['Scores']['Overall']['Score'], , reverse = True)
+    return sorted(results_list, key = lambda result: result['Scores']['Overall']['Score'], reverse = True)
 
 def generate_github_md_results_tables(results_list):
     print('Saving model results table to file.')
