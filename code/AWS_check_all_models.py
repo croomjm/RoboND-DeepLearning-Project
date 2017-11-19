@@ -32,7 +32,7 @@ class model_results(object):
     def save_model_results(self):
         print('Saving model results for {} to file.'.format(self.data['File Name']))
         with open('../data/weights/results_{}.json'.format(self.data['File Name']), 'w') as fp:
-            json.dump(self.data, fp, indent = 4, sort_keys = True)
+            json.dump(self.data, fp, indent = 4, sort_keys = True, reversed = True)
 
     def parse_file_name(self, weight_file_name):
         keys = ['Learning Rate', 'Batch Size', 'Epochs', 'Steps per Epoch', 'Validation Steps', 'Optimizer', 'Date Code']
@@ -85,37 +85,52 @@ class model_results(object):
         print('Scoring Model...')
         # Scores for while the quad is following behind the target. 
         true_pos1, false_pos1, false_neg1, iou1 = scoring_utils.score_run_iou(val_following, pred_following)
+        total1 = true_pos1 + false_pos1 + false_neg1
         self.data['Scores']['Following Target'] = {}
         self.data['Scores']['Following Target']['True Positives'] = true_pos1
         self.data['Scores']['Following Target']['False Positives'] = false_pos1
         self.data['Scores']['Following Target']['False Negatives'] = false_neg1
         self.data['Scores']['Following Target']['IOU'] = iou1
+        self.data['Scores']['Following Target']['Percent False Positives'] = false_pos1/total1
+        self.data['Scores']['Following Target']['Percent False Negative'] = false_neg1/total1
+        self.data['Scores']['Following Target']['Percent True Positives'] = true_pos1/total1
 
         # Scores for images while the quad is on patrol and the target is not visable
         true_pos2, false_pos2, false_neg2, iou2 = scoring_utils.score_run_iou(val_no_targ, pred_no_targ)
+        total2 = true_pos2 + false_pos2 + false_neg2
         self.data['Scores']['No Target'] = {}
         self.data['Scores']['No Target']['True Positives'] = true_pos2
         self.data['Scores']['No Target']['False Positives'] = false_pos2
         self.data['Scores']['No Target']['False Negatives'] = false_neg2
         self.data['Scores']['No Target']['IOU'] = iou2
+        self.data['Scores']['No Target']['Percent False Positives'] = false_pos2/total2
+        self.data['Scores']['No Target']['Percent False Negative'] = false_neg2/total2
+        self.data['Scores']['No Target']['Percent True Positives'] = true_pos2/total2
 
         # This score measures how well the neural network can detect the target from far away
         true_pos3, false_pos3, false_neg3, iou3 = scoring_utils.score_run_iou(val_with_targ, pred_with_targ)
+        total3 = true_pos3 + false_pos3 + false_neg3
         self.data['Scores']['Far from Target'] = {}
         self.data['Scores']['Far from Target']['True Positives'] = true_pos3
         self.data['Scores']['Far from Target']['False Positives'] = false_pos3
         self.data['Scores']['Far from Target']['False Negatives'] = false_neg3
         self.data['Scores']['Far from Target']['IOU'] = iou3
+        self.data['Scores']['Far from Target']['Percent False Positives'] = false_pos3/total3
+        self.data['Scores']['Far from Target']['Percent False Negative'] = false_neg3/total3
+        self.data['Scores']['Far from Target']['Percent True Positives'] = true_pos3/total3
 
         # Sum all the true positives, etc from the three datasets to get a weight for the score
-        self.data['Scores']['Overall'] = {}
-        self.data['Scores']['Overall']['True Positives'] = true_pos1 + true_pos2 + true_pos3
-        self.data['Scores']['Overall']['False Positives'] = false_pos1 + false_pos2 + false_pos3
-        self.data['Scores']['Overall']['False Negatives'] = false_neg1 + false_neg2 + false_neg3
-
         true_pos = true_pos1 + true_pos2 + true_pos3
         false_neg = false_neg1 + false_neg2 + false_neg3
         false_pos = false_pos1 + false_pos2 + false_pos3
+        total = total1 + total2 + total3
+        self.data['Scores']['Overall'] = {}
+        self.data['Scores']['Overall']['True Positives'] = true_pos
+        self.data['Scores']['Overall']['False Positives'] = false_pos
+        self.data['Scores']['Overall']['False Negatives'] = false_neg
+        self.data['Scores']['Overall']['Percent False Positives'] = false_pos/total
+        self.data['Scores']['Overall']['Percent False Negative'] = false_neg/total
+        self.data['Scores']['Overall']['Percent True Positives'] = true_neg/total
 
         weight = true_pos/(true_pos+false_neg+false_pos)
         self.data['Scores']['Overall']['Weight'] = weight
@@ -158,7 +173,7 @@ def generate_github_md_summary_results_table(results_list):
         row = ''
         for c in header_cols:
             if c == '':
-                row += '| ' + str(i) + ' '
+                row += '| ' + str(i+1) + ' '
             elif c == 'IOU' or c == 'Score':
                 row += '| ' + '{0:0.3f}'.format(r['Scores']['Overall'][c]) + ' '
             else:
@@ -176,10 +191,9 @@ def generate_github_md_summary_results_table(results_list):
 def generate_github_md_detailed_results_table(results_list):
     #table with false negatives, false positives, etc. but not model parameters
     header_cols = ['',
-                    'Overall<br>Score',
-                    'Following Target<br>True Positives','Following Target<br>False Positives','Following Target<br>False Negatives',
-                    'No Target<br>True Positives','No Target<br>False Positives','No Target<br>False Negatives',
-                    'Far from Target<br>True Positives','Far from Target<br>False Positives','Far from Target<br>False Negatives',
+                    'Overall<br>Score','Following Target<br>Percent False Positives','Following Target<br>Percent False Negatives',
+                    'No Target<br>Percent False Positives','No Target<br>Percent False Negatives',
+                    'Far from Target<br>Percent False Positives','Far from Target<br>Percent False Negatives',
                     ]
 
     header_row = '| ' + ' | '.join(header_cols) + ' |'
@@ -190,11 +204,13 @@ def generate_github_md_detailed_results_table(results_list):
         row = ''
         for c in header_cols:
             if c == '':
-                row += '| ' + str(i) + ' '
+                row += '| ' + str(i+1) + ' '
             else:
                 key1, key2 = c.split('<br>')
-                if isinstance(r['Scores'][key1][key2], float):
+                if key2 == 'Score':
                     item = str(round(r['Scores'][key1][key2], 3))
+                elif isinstance(r['Scores'][key1][key2], float):
+                    item = str(round(r['Scores'][key1][key2]*100, 3))+'%'
                 else:
                     item = str(r['Scores'][key1][key2])
                 row += '| ' + item + ' '
