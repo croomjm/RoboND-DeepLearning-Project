@@ -21,7 +21,9 @@ def separable_conv2d_batchnorm(input_layer, filters, strides=1):
     output_layer = SeparableConv2DKeras(filters=filters,kernel_size=3, strides=strides,
                              padding='same', activation='relu')(input_layer)
     
-    output_layer = layers.BatchNormalization()(output_layer) 
+    output_layer = layers.BatchNormalization()(output_layer)
+    output_layer.add(layers.Dropout(0.5))
+
     return output_layer
 
 def conv2d_batchnorm(input_layer, filters, kernel_size=3, strides=1):
