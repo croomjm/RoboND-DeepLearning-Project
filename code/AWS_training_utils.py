@@ -18,7 +18,6 @@ from utils import plotting_tools
 from utils import model_tools
 
 def separable_conv2d_batchnorm(input_layer, filters, strides=1):
-    input_layer = tf.nn.dropout(input_layer, 0.5)
     output_layer = SeparableConv2DKeras(filters=filters,kernel_size=3, strides=strides,
                              padding='same', activation='relu')(input_layer)
     
@@ -57,7 +56,6 @@ def decoder_block(small_ip_layer, large_ip_layer, filters):
     return output_layer
 
 def fcn_model(inputs, num_classes):
-    
     # TODO Add Encoder Blocks. 
     # Remember that with each encoder layer, the depth of your model (the number of filters) increases.
     enc1 = encoder_block(inputs, 16, 2)
