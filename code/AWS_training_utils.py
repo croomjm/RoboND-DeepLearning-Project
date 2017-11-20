@@ -85,7 +85,8 @@ def train_model(learning_rate, batch_size, num_epochs, steps_per_epoch, validati
     output_layer = fcn_model(inputs, num_classes)
 
     # Define the Keras model and compile it for training
-    model = models.Model(inputs=inputs, outputs=output_layer)
+    #model = models.Model(inputs=inputs, outputs=output_layer)
+    model = model_tools.load_network('weights_005_rate_64_batch_75_epochs_103_epoch_steps_110_valid_steps_Nadam_opt_20171120-203242')
 
     if optimizer == 'Nadam':
         model.compile(optimizer=keras.optimizers.Adam(learning_rate), loss='categorical_crossentropy')
