@@ -1,5 +1,5 @@
 wget -P ~/RoboND-DeepLearning-Project/data/ https://s3-us-west-2.amazonaws.com/robond-deep-learn-project-training-data/additional_train.zip
-wget -P ~/RoboND-DeepLearning-Project/data/ https://s3-us-west-2.amazonaws.com/robond-deep-learn-project-training-data/additional_train.zip
+wget -P ~/RoboND-DeepLearning-Project/data/ https://s3-us-west-2.amazonaws.com/robond-deep-learn-project-training-data/additional_train2.zip
 
 unzip ~/RoboND-DeepLearning-Project/data/additional_train.zip -d ~/RoboND-DeepLearning-Project/data
 unzip ~/RoboND-DeepLearning-Project/data/additional_train2.zip -d ~/RoboND-DeepLearning-Project/data
