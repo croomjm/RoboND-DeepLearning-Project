@@ -21,9 +21,9 @@ train_images = 6648.
 
 params1 = [0.005,
            64,
-           40,
-           train_images//64.,
-           val_images//64,
+           75,
+           int(train_images//64.),
+           int(val_images//64),
            4,
            'Nadam']
 
