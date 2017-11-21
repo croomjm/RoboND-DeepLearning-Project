@@ -33,7 +33,7 @@
 ![Model Architecture][Model_architecture]
 
 ## 3. Tuning Hyperparameters
-The model has the following hyperparameters:
+ The model has the following hyperparameters:
  1. Batch Size: This defines the number of training images that are propagated through the model during a single epoch step.
  2. Number of Epochs: This defines how many full training iterations are used to train the model weights. During each epoch, training data is propagated through the network. At the start of each epoch, the weights are initialized with the output of the previous epoch.
  3. Learning Rate: This defines the step size used when modifying each weight using the gradient descent optimizer. Note that in some of the optimizers (e.g. Nadam), this rate changes over time according to optimizer settings.
@@ -94,12 +94,17 @@ The model has the following hyperparameters:
  Note: I ran a number of these tests before I realized that I was assigning the batch size and training/validation steps per epoch incorrectly. Ideally, the number of training and validation runs should be approximately equal to the number of images in each dataset divided by the size of each batch so that all images are used about once each iteration. With my arbitrarily assigned batch sizes and number of steps, I was running each image more than once during each training epoch. I assume that this behaves similarly to a model for with an equivalent batch size but larger number of epochs, but I'm not sure how or if the data generator subdivides the data set into batches (at random or ensuring each is taken from a shuffled stack before reusing) or if the optimizer alters the learning rate between epochs and not within an epoch.
 
 ## 4. Final Model Performance
+ Here's a video of my [best performing model](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/data/weights/weights_005_rate_64_batch_75_epochs_103_epoch_steps_110_valid_steps_Nadam_opt_20171120-203242) in action! Even with the seemingly mediocre performance, the model still does a decent job acquiring the hero, and it does a great job following the hero once she's acquired. This behavior aligns well with the data gathered during the training and validation phase since the percentage of false negatives while following closely behind the hero is particularly low.
 
-Here's a video of my [best performing model](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/data/weights/weights_005_rate_64_batch_75_epochs_103_epoch_steps_110_valid_steps_Nadam_opt_20171120-203242) in action!
-
-# add in description of final model results
-# add in loss graphs
-# add in video of successful run
+ [![Successfully Following the Hero!](https://img.youtube.com/vi/Nr_QVikSQto/0.jpg)](https://www.youtube.com/watch?v=Nr_QVikSQto)
 
 ## 5. Conclusions
+ I can think of a few strategies that might help me improve my results further:
+ 1. Use a proven CNN architecture (e.g. VGG16) as the basis for my FCN.
+ 2. Add more layers to the network and train for more epochs.
+ 3. Gather more data to improve my model's performance, especially of the hero from far away and of other people from far away.
+ 4. Add dropout to my model and train for many more epochs.
  
+ The model as is would probably be able to accommodate segmenting out dogs, cats, cars, etc., though additional training would be required to do so. In general, the features represented by the weights as currently trained would not translate well to tracking different objects. In order to track a larger number of object classes, it might also be necessary to increase the depth and complexity of the network to capture the full breadth of features required to identify the classes.
+
+ I'm generally amazed not only by how powerful neural networks are but also how easy it's become to implement them thanks to a number of open souce libraries. There's still plenty to learn, but I'm excited to experiment!
