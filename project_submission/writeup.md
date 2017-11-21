@@ -44,47 +44,62 @@ The model has the following hyperparameters:
  
  Although the default optimizer, Adam, worked fine, I looked into alternatives and found that Nadam gave me slightly better results. Nadam is similar to Adam, except that it uses Nesterov momentum. I found [this article](http://ruder.io/optimizing-gradient-descent/) helpful in developing my understanding of the differences between the available optimization algorithms and why Nadam might be a good choice. Both Nadam and Adam move in the direction of the gradient at the current position, but the direction of descent is augmented by taking into account the previous descent directions. This serves to apply a sort of time constant to the descent direction such that the algorithm continues along a smoother path even if local gradient changes are fairly noisy. Nesterov momentum, however, improves upon this method by not only using previous descent directions to add momentum to the optimizer but also using an estimate of the gradient at the future position to modulate how far along this descent direction it moves. In essence, if it sees that it will be approaching a hill ahead, it slows itself down to avoid ascending up the hill. For similar parameters, I achieved better results with Nadam than Adam (parameters set per recommendations from [Keras documentation](https://keras.io/optimizers/)).
  
- I ran a series of tests to determine which hyperparameters would be most successful. Note that these tests were performed with different datasets. All runs labeled 'default' were run with the Udacity-provided dataset. After seeing the performance of these runs, I chose to gather more training/validation images of a few scenarios: hero in a dense crowd, far away from the hero, and no hero with and without a dense crowd. I saw marginal improvements with the expanded datasets, but not nearly as much as I expected. I then realized I wasn't utilizing the entire dataset! I had set the number of training and validation steps somewhat arbitrarily without realizing that this was restricting the number of images I used in each epoch.
+ I ran a series of tests to determine which hyperparameters would be most successful. Note that these tests were performed with different datasets. All runs labeled 'default' were run with the Udacity-provided dataset. After seeing the performance of these runs, I chose to gather more training/validation images of a few scenarios: hero in a dense crowd, far away from the hero, and no hero with and without a dense crowd. I saw marginal improvements with the expanded datasets, but not nearly as much as I expected.
  
- In any case, I successfully achieved the minimum passing score of 0.40 for a couple of configurations.
- 
+ In any case, I successfully achieved the minimum passing score of 0.40 for a number of configurations, both with and without supplemental training/validation data.
+
  | Run | Learning Rate | Batch Size | Epochs | Steps per Epoch | Validation Steps | Optimizer | IOU | Score | Dataset |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 1 | 0.005 | 256 | 12 | 500 | 50 | Nadam | 0.562 | 0.411 | Supplemental Training Data |
-| 2 | 0.005 | 64 | 15 | 400 | 50 | Nadam | 0.535 | 0.405 | Default |
-| 3 | 0.005 | 64 | 12 | 400 | 50 | Nadam | 0.541 | 0.398 | Supplemental Training Data |
-| 4 | 0.005 | 128 | 15 | 400 | 50 | Adam | 0.537 | 0.392 | Default |
-| 5 | 0.01 | 256 | 15 | 500 | 50 | Nadam | 0.529 | 0.390 | Default |
-| 6 | 0.01 | 64 | 20 | 400 | 50 | Nadam | 0.562 | 0.390 | Supplemental Training & Validation Data |
-| 7 | 0.005 | 64 | 15 | 400 | 50 | Adam | 0.539 | 0.389 | Default |
-| 8 | 0.002 | 64 | 25 | 400 | 50 | Nadam | 0.535 | 0.387 | Supplemental Training & Validation Data |
-| 9 | 0.002 | 64 | 15 | 500 | 50 | Adam | 0.535 | 0.386 | Default |
-| 10 | 0.005 | 64 | 20 | 400 | 50 | Nadam | 0.526 | 0.381 | Supplemental Training & Validation Data |
-| 11 | 0.01 | 256 | 15 | 500 | 50 | Adam | 0.518 | 0.377 | Default |
-| 12 | 0.005 | 128 | 12 | 400 | 50 | Nadam | 0.520 | 0.374 | Supplemental Training Data |
-| 13 | 0.01 | 128 | 15 | 500 | 50 | Adam | 0.506 | 0.370 | Default |
-| 14 | 0.01 | 64 | 15 | 500 | 50 | Adam | 0.505 | 0.363 | Default |
-| 15 | 0.002 | 128 | 15 | 500 | 50 | Adam | 0.501 | 0.361 | Default |
+| 1 | 0.005 | 64 | 75 | 103 | 110 | Nadam | 0.569 | 0.425 | Supplemental Training & Validation Data |
+| 2 | 0.005 | 64 | 125 | 103 | 110 | Nadam | 0.547 | 0.415 | Supplemental Training & Validation Data |
+| 3 | 0.005 | 256 | 12 | 500 | 50 | Nadam | 0.562 | 0.411 | Supplemental Training Data |
+| 4 | 0.005 | 64 | 15 | 400 | 50 | Nadam | 0.535 | 0.405 | Default |
+| 5 | 0.005 | 64 | 12 | 400 | 50 | Nadam | 0.541 | 0.398 | Supplemental Training Data |
+| 6 | 0.005 | 64 | 40 | 103 | 110 | Nadam | 0.540 | 0.393 | Supplemental Training & Validation Data |
+| 7 | 0.005 | 128 | 15 | 400 | 50 | Adam | 0.537 | 0.392 | Default |
+| 8 | 0.01 | 256 | 15 | 500 | 50 | Nadam | 0.529 | 0.390 | Default |
+| 9 | 0.01 | 64 | 20 | 400 | 50 | Nadam | 0.562 | 0.390 | Supplemental Training & Validation Data |
+| 10 | 0.005 | 64 | 15 | 400 | 50 | Adam | 0.539 | 0.389 | Default |
+| 11 | 0.002 | 64 | 25 | 400 | 50 | Nadam | 0.535 | 0.387 | Supplemental Training & Validation Data |
+| 12 | 0.002 | 64 | 15 | 500 | 50 | Adam | 0.535 | 0.386 | Default |
+| 13 | 0.005 | 64 | 20 | 400 | 50 | Nadam | 0.526 | 0.381 | Supplemental Training & Validation Data |
+| 14 | 0.01 | 256 | 15 | 500 | 50 | Adam | 0.518 | 0.377 | Default |
+| 15 | 0.005 | 128 | 12 | 400 | 50 | Nadam | 0.520 | 0.374 | Supplemental Training Data |
+| 16 | 0.01 | 128 | 15 | 500 | 50 | Adam | 0.506 | 0.370 | Default |
+| 17 | 0.01 | 64 | 15 | 500 | 50 | Adam | 0.505 | 0.363 | Default |
+| 18 | 0.002 | 128 | 15 | 500 | 50 | Adam | 0.501 | 0.361 | Default |
+
 
 | Run | Overall<br>Score | Following Target<br>Percent False Negatives | No Target<br>Percent False Positives | Far from Target<br>Percent False Positives | Far from Target<br>Percent False Negatives | Dataset |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 1 | 0.411 | 0.0% | 27.306% | 0.619% | 52.632% | Supplemental Training Data |
-| 2 | 0.405 | 0.0% | 16.236% | 0.31% | 52.941% | Default |
-| 3 | 0.398 | 0.0% | 26.199% | 0.929% | 51.703% | Supplemental Training Data |
-| 4 | 0.392 | 0.0% | 18.819% | 0.31% | 58.204% | Default |
-| 5 | 0.39 | 0.0% | 12.915% | 0.619% | 60.062% | Default |
-| 6 | 0.39 | 0.0% | 48.708% | 1.238% | 50.464% | Supplemental Training & Validation Data |
-| 7 | 0.389 | 0.0% | 23.985% | 0.929% | 57.276% | Default |
-| 8 | 0.387 | 0.0% | 19.188% | 0.929% | 59.752% | Supplemental Training & Validation Data |
-| 9 | 0.386 | 0.0% | 28.413% | 0.31% | 55.108% | Default |
-| 10 | 0.381 | 0.0% | 22.509% | 0.31% | 57.895% | Supplemental Training & Validation Data |
-| 11 | 0.377 | 0.0% | 16.974% | 0.619% | 60.372% | Default |
-| 12 | 0.374 | 0.0% | 19.188% | 0.31% | 60.991% | Supplemental Training Data |
-| 13 | 0.37 | 0.0% | 10.332% | 0.31% | 63.158% | Default |
-| 14 | 0.363 | 0.184% | 16.236% | 0.31% | 62.539% | Default |
-| 15 | 0.361 | 0.0% | 13.653% | 0.31% | 64.396% | Default |
+| 1 | 0.425 | 0.0% | 28.413% | 0.929% | 47.678% | Supplemental Training & Validation Data |
+| 2 | 0.415 | 0.184% | 19.926% | 0.619% | 49.536% |Supplemental Training & Validation Data |
+| 3 | 0.411 | 0.0% | 27.306% | 0.619% | 52.632% | Supplemental Training Data |
+| 4 | 0.405 | 0.0% | 16.236% | 0.31% | 52.941% | Default |
+| 5 | 0.398 | 0.0% | 26.199% | 0.929% | 51.703% | Supplemental Training Data |
+| 6 | 0.393 | 0.0% | 28.782% | 0.619% | 52.941% | Supplemental Training & Validation Data |
+| 7 | 0.392 | 0.0% | 18.819% | 0.31% | 58.204% | Default |
+| 8 | 0.39 | 0.0% | 12.915% | 0.619% | 60.062% | Default |
+| 9 | 0.39 | 0.0% | 48.708% | 1.238% | 50.464% | Supplemental Training & Validation Data |
+| 10 | 0.389 | 0.0% | 23.985% | 0.929% | 57.276% | Default |
+| 11 | 0.387 | 0.0% | 19.188% | 0.929% | 59.752% | Supplemental Training & Validation Data |
+| 12 | 0.386 | 0.0% | 28.413% | 0.31% | 55.108% | Default |
+| 13 | 0.381 | 0.0% | 22.509% | 0.31% | 57.895% | Supplemental Training & Validation Data |
+| 14 | 0.377 | 0.0% | 16.974% | 0.619% | 60.372% | Default |
+| 15 | 0.374 | 0.0% | 19.188% | 0.31% | 60.991% | Supplemental Training Data |
+| 16 | 0.37 | 0.0% | 10.332% | 0.31% | 63.158% | Default |
+| 17 | 0.363 | 0.184% | 16.236% | 0.31% | 62.539% | Default |
+| 18 | 0.361 | 0.0% | 13.653% | 0.31% | 64.396% | Default |
  
+ Note: I ran a number of these tests before I realized that I was assigning the batch size and training/validation steps per epoch incorrectly. Ideally, the number of training and validation runs should be approximately equal to the number of images in each dataset divided by the size of each batch so that all images are used about once each iteration. With my arbitrarily assigned batch sizes and number of steps, I was running each image more than once during each training epoch. I assume that this behaves similarly to a model for with an equivalent batch size but larger number of epochs, but I'm not sure how or if the data generator subdivides the data set into batches (at random or ensuring each is taken from a shuffled stack before reusing) or if the optimizer alters the learning rate between epochs and not within an epoch.
 
 ## 4. Final Model Performance
 
+Here's a video of my [best performing model](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/data/weights/weights_005_rate_64_batch_75_epochs_103_epoch_steps_110_valid_steps_Nadam_opt_20171120-203242) in action!
+
+# add in description of final model results
+# add in loss graphs
+# add in video of successful run
+
 ## 5. Conclusions
+ 

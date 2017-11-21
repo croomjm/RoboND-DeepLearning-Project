@@ -1,0 +1,50 @@
+{
+    "Batch Size": 64,
+    "Date Created": "20171121-011717",
+    "Epochs": 125,
+    "File Name": "weights_005_rate_64_batch_125_epochs_103_epoch_steps_110_valid_steps_Nadam_opt_20171121-011717",
+    "Learning Rate": 0.005,
+    "Optimizer": "Nadam",
+    "Scores": {
+        "Far from Target": {
+            "False Negatives": 160,
+            "False Positives": 2,
+            "IOU": 0.22613283564591838,
+            "Percent False Negatives": 0.4953560371517028,
+            "Percent False Positives": 0.006191950464396285,
+            "Percent True Positives": 0.43653250773993807,
+            "True Positives": 141
+        },
+        "Following Target": {
+            "False Negatives": 1,
+            "False Positives": 0,
+            "IOU": 0.8683692008066184,
+            "Percent False Negatives": 0.001841620626151013,
+            "Percent False Positives": 0.0,
+            "Percent True Positives": 0.990791896869245,
+            "True Positives": 538
+        },
+        "No Target": {
+            "False Negatives": 0,
+            "False Positives": 54,
+            "IOU": 0.0,
+            "Percent False Negatives": 0.0,
+            "Percent False Positives": 0.1992619926199262,
+            "Percent True Positives": 0.0,
+            "True Positives": 0
+        },
+        "Overall": {
+            "False Negatives": 161,
+            "False Positives": 56,
+            "IOU": 0.5472510182262684,
+            "Percent False Negatives": 0.14160070360598065,
+            "Percent False Positives": 0.04925241864555849,
+            "Percent True Positives": 0.5971855760773966,
+            "Score": 0.41471366224959405,
+            "True Positives": 679,
+            "Weight": 0.7578125
+        }
+    },
+    "Steps per Epoch": 103,
+    "Validation Steps": 110
+}
