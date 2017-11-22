@@ -7,7 +7,7 @@
    My first step in this project was to modify the organization of the project code so I could more easily test a variety of settings on AWS without having to start each run manually. I chose to break the primary functions of the code into a few files:
    * [AWS_training_dispatcher.py](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/code/AWS_training_dispatcher.py): This is the high level training run dispatcher. It sets the hyper parameters for each run, generates the weights file name from the parameters, and calls the `train_model()` function from AWS_training_utils.py.
    * [AWS_training_utils.py](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/code/AWS_training_utils.py): This is where the magic happens. All of the training layers are defined here as well as a high level function that sets up, initializes, and saves the results from the network training.
-   * [AWS_check_all_models.py](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/code/AWS_check_all_models.py): Typing is hard. That's why I chose to make a processing function to test the performance of all weights files in the weights directory and compile the results into a simple-to-read github markdown table sorted by overall network score (definition of score below).
+   * [AWS_check_all_models.py](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/code/AWS_check_all_models.py): Typing is hard. That's why I chose to make a processing function to test the performance of all weights files in the weights directory and compile the results into a simple-to-read github markdown table sorted by overall network score (definition of score below). Note: Using the Udacity AMI and local RoboND environment, I had to run `conda install nomkl` to get the function to work correctly. Apparently there is an issue with numpy and scipy using mkl by default in new distributions on anaconda. (see [here](https://github.com/BVLC/caffe/issues/3884))
    * [download_images.sh](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/code/utils/download_images.sh): I chose to gather supplemental training/validation data in addition to the baseline data provided as part of the project. I stored this data in an AWS S3 bucket (how is this free?!) for easy access and download. Unfortunately, that meant that I would have to type 3 long wget commands and move all the images into appropriate folders. Uacceptable. That's why I wrote this slick bash script to pull all of the images (including the Udacity-provided images) from their respective S3 buckets, unzip them, and recombine them into the right subfolders. I also included options to either download or not download the supplemental training or validation data to make it easy to compare the performance with various datasets.
 
   The task at hand is fairly simple: Given a camera view of a scene, indentify which pixels within in the scene can be classified as the "hero" (target the drone would like to follow). As a byproduct, we're also interested in identifying pixels that below to the background or represent people other than the hero. Since we're able to gather simulated images from Unity, it's easy to generate training data as the game engine knows a priori which pixels in the scene can be classified as background, hero, or other person. As a result, the most difficult part of the task is to use this tagged training data in combination with an appropriate neural network architecture to quickly segment the scene into pixels of each class.
@@ -33,7 +33,7 @@
 ![Model Architecture][Model_architecture]
 
 ## 3. Tuning Hyperparameters
-The model has the following hyperparameters:
+ The model has the following hyperparameters:
  1. Batch Size: This defines the number of training images that are propagated through the model during a single epoch step.
  2. Number of Epochs: This defines how many full training iterations are used to train the model weights. During each epoch, training data is propagated through the network. At the start of each epoch, the weights are initialized with the output of the previous epoch.
  3. Learning Rate: This defines the step size used when modifying each weight using the gradient descent optimizer. Note that in some of the optimizers (e.g. Nadam), this rate changes over time according to optimizer settings.
@@ -94,12 +94,17 @@ The model has the following hyperparameters:
  Note: I ran a number of these tests before I realized that I was assigning the batch size and training/validation steps per epoch incorrectly. Ideally, the number of training and validation runs should be approximately equal to the number of images in each dataset divided by the size of each batch so that all images are used about once each iteration. With my arbitrarily assigned batch sizes and number of steps, I was running each image more than once during each training epoch. I assume that this behaves similarly to a model for with an equivalent batch size but larger number of epochs, but I'm not sure how or if the data generator subdivides the data set into batches (at random or ensuring each is taken from a shuffled stack before reusing) or if the optimizer alters the learning rate between epochs and not within an epoch.
 
 ## 4. Final Model Performance
+ Here's a video of my [best performing model](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/data/weights/weights_005_rate_64_batch_75_epochs_103_epoch_steps_110_valid_steps_Nadam_opt_20171120-203242) in action! Even with the seemingly mediocre performance, the model still does a decent job acquiring the hero, and it does a great job following the hero once she's acquired. This behavior aligns well with the data gathered during the training and validation phase since the percentage of false negatives while following closely behind the hero is particularly low.
 
-Here's a video of my [best performing model](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/data/weights/weights_005_rate_64_batch_75_epochs_103_epoch_steps_110_valid_steps_Nadam_opt_20171120-203242) in action!
-
-# add in description of final model results
-# add in loss graphs
-# add in video of successful run
+ [![Successfully Following the Hero!](https://img.youtube.com/vi/Nr_QVikSQto/0.jpg)](https://www.youtube.com/watch?v=Nr_QVikSQto)
 
 ## 5. Conclusions
+ I can think of a few strategies that might help me improve my results further:
+ 1. Use a proven CNN architecture (e.g. VGG16) as the basis for my FCN.
+ 2. Add more layers to the network and train for more epochs.
+ 3. Gather more data to improve my model's performance, especially of the hero from far away and of other people from far away.
+ 4. Add dropout to my model and train for many more epochs.
  
+ The model as is would probably be able to accommodate segmenting out dogs, cats, cars, etc., though additional training would be required to do so. In general, the features represented by the weights as currently trained would not translate well to tracking different objects. In order to track a larger number of object classes, it might also be necessary to increase the depth and complexity of the network to capture the full breadth of features required to identify the classes.
+
+ I'm generally amazed not only by how powerful neural networks are but also how easy it's become to implement them thanks to a number of open souce libraries. There's still plenty to learn, but I'm excited to experiment!
