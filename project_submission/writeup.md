@@ -1,5 +1,6 @@
 [//]: # (Image References)
 [model_architecture]:./images/Network_architecture.png
+[image_downsampling]: ./images/image_downsampling.png
 
 # Project: Follow Me (Deep Learning)
 
@@ -44,7 +45,9 @@
  
  The most important feature of these three is that we maintained the shape of the input (H and W). This means that when the decoder layers are applied, we can return the image to the same shape as the input, which allows us to make predictions on a pixel by pixel basis. 
  
- The decoder layers are balanced against the encoder layer to return the output to the same shape as the input image. To accomplish this, transposed convolutions are used to essentially work like the encoder layers, except in reverse. Just like a forward convolutional layer, we can adjust the padding, stride, and kernel size to change the dimensionality of the input data. I chose a simple way of making sure that the data I ended up with was the same shape as the input image by mirroring the encoder layers with corresponding decoder layers. One problem with decoder layers, however, is that the information can essentially be blurred since the data is being upscaled at each step (e.g. projecting a 2x2 image to a 5x5 image by combining weighted sums from each kernel position). As mentioned above, the skip connections help to prevent the output data from being too blurred by combining the upsampled input data with higher resolution data from previous layers.
+ The decoder layers are balanced against the encoder layer to return the output to the same shape as the input image. To accomplish this, transposed convolutions are used to essentially work like the encoder layers, except in reverse. Just like a forward convolutional layer, we can adjust the padding, stride, and kernel size to change the dimensionality of the input data. I chose a simple way of making sure that the data I ended up with was the same shape as the input image by mirroring the encoder layers with corresponding decoder layers. One problem with decoder layers, however, is that the information can essentially be blurred since the data is being upscaled at each step (e.g. projecting a 2x2 image to a 5x5 image by combining weighted sums from each kernel position). As mentioned above, the skip connections help to prevent the output data from being too blurred by combining the upsampled input data with higher resolution data from previous layers. I've illustrated this below by progressively downsampling the udacity logo by 50%, then upsampling it back to the original resolution. As expected, some detail is lost as the upsampling operation requires interpolating from incomplete information.
+ 
+ ![Pixelation from Interpolation][image_downsampling]
 
 ## 4. Tuning Hyperparameters
  The model has the following hyperparameters:
