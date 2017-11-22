@@ -32,7 +32,21 @@
    
 ![Model Architecture][Model_architecture]
 
-## 3. Tuning Hyperparameters
+## 3. Encoders, Decoders, and 1x1 Convolutions, oh my!
+ While my particular model has a few details that separate it from the general case of FCNs, there are a few elements that are common among all FCNs: encoder layers, decoder layers, and a 1x1 convolution layer.
+ 
+ The purpose of the encoder layer is to extract feature information from the input image. The encoder layer will have similar features to those of other convolutional neural networks, except that they eliminate the final fully connected layer at the end of the image. The particular architecture of the encoder is a design parameter that can be manipulated to address particular problems, but ResNet, VGG, Alexnet, etc. could all be used.
+ 
+ 1x1 convolutions follow the encoder layers for a number of reasons. First, whereas a regular convolutional neural network would terminate in a fully connnected layer, which flattens the output into a 2D matrix (values of which might represent, for example, the probability of an image being of a particular class), the 1x1 convolution reduces the input to a 4D tensor. Suppose the input to the convolutional layer is NxWxHxD, where N is the number of batches, W is the width, H is the height, and D is the depth of each batch of inputs. A 1x1 convolution layer with K filters would result in an output of size NxWxHxK. We can note a few of things here:
+  1. The height and width of the input have been preserved. In other words, the 1x1 convolution does not destroy spatial information like a fully connected layer would.
+  2. We altered the depth of the input from D to K. This has the ability to easily increase or decrease the depth of the input arbitrarily (increase or decrease). 1x1 convolutions are frequently used to decrease the depth of input layer before executing expensive operations (e.g. in the GoogLeNet or "inception" model prior to 5x5 and 3x3 convolutions).
+  3. This isn't necessarily obvious from the description, but the 1x1 convolution also can be reduced to a simple matrix multiplcation operation, which means it can be executed quickly as compared to higher dimensionality convolution filters.
+ 
+ The most important feature of these three is that we maintained the shape of the input (H and W). This means that when the decoder layers are applied, we can return the image to the same shape as the input, which allows us to make predictions on a pixel by pixel basis. 
+ 
+ The decoder layers are balanced against the encoder layer to return the output to the same shape as the input image. To accomplish this, transposed convolutions are used to essentially work like the encoder layers, except in reverse. Just like a forward convolutional layer, we can adjust the padding, stride, and kernel size to change the dimensionality of the input data. I chose a simple way of making sure that the data I ended up with was the same shape as the input image by mirroring the encoder layers with corresponding decoder layers. One problem with decoder layers, however, is that the information can essentially be blurred since the data is being upscaled at each step (e.g. projecting a 2x2 image to a 5x5 image by combining weighted sums from each kernel position). As mentioned above, the skip connections help to prevent the output data from being too blurred by combining the upsampled input data with higher resolution data from previous layers.
+
+## 4. Tuning Hyperparameters
  The model has the following hyperparameters:
  1. Batch Size: This defines the number of training images that are propagated through the model during a single epoch step.
  2. Number of Epochs: This defines how many full training iterations are used to train the model weights. During each epoch, training data is propagated through the network. At the start of each epoch, the weights are initialized with the output of the previous epoch.
@@ -93,18 +107,18 @@
  
  Note: I ran a number of these tests before I realized that I was assigning the batch size and training/validation steps per epoch incorrectly. Ideally, the number of training and validation runs should be approximately equal to the number of images in each dataset divided by the size of each batch so that all images are used about once each iteration. With my arbitrarily assigned batch sizes and number of steps, I was running each image more than once during each training epoch. I assume that this behaves similarly to a model for with an equivalent batch size but larger number of epochs, but I'm not sure how or if the data generator subdivides the data set into batches (at random or ensuring each is taken from a shuffled stack before reusing) or if the optimizer alters the learning rate between epochs and not within an epoch.
 
-## 4. Final Model Performance
+## 6. Final Model Performance
  Here's a video of my [best performing model](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/data/weights/weights_005_rate_64_batch_75_epochs_103_epoch_steps_110_valid_steps_Nadam_opt_20171120-203242) in action! Even with the seemingly mediocre performance, the model still does a decent job acquiring the hero, and it does a great job following the hero once she's acquired. This behavior aligns well with the data gathered during the training and validation phase since the percentage of false negatives while following closely behind the hero is particularly low.
 
  [![Successfully Following the Hero!](https://img.youtube.com/vi/Nr_QVikSQto/0.jpg)](https://www.youtube.com/watch?v=Nr_QVikSQto)
 
-## 5. Conclusions
+## 6. Conclusions
  I can think of a few strategies that might help me improve my results further:
  1. Use a proven CNN architecture (e.g. VGG16) as the basis for my FCN.
  2. Add more layers to the network and train for more epochs.
  3. Gather more data to improve my model's performance, especially of the hero from far away and of other people from far away.
  4. Add dropout to my model and train for many more epochs.
  
- The model as is would probably be able to accommodate segmenting out dogs, cats, cars, etc., though additional training would be required to do so. In general, the features represented by the weights as currently trained would not translate well to tracking different objects. In order to track a larger number of object classes, it might also be necessary to increase the depth and complexity of the network to capture the full breadth of features required to identify the classes.
+ The model architecture as is would be able to accommodate segmenting out dogs, cats, cars, etc., though retraining with tagged images of the new classes would be required. In general, the features represented by the weights as currently trained would not translate well to tracking different objects. In order to track a larger number of object classes, it might also be necessary to increase the depth and complexity of the network (and number of epochs and training images as well) to capture the full breadth of features required to identify the classes.
 
  I'm generally amazed not only by how powerful neural networks are but also how easy it's become to implement them thanks to a number of open souce libraries. There's still plenty to learn, but I'm excited to experiment!
