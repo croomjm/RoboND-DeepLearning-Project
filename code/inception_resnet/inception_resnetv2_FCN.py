@@ -1,42 +1,4 @@
-# -*- coding: utf-8 -*-
-"""Inception-ResNet V2 model for Keras.
-Model naming and structure follows TF-slim implementation (which has some additional
-layers and different number of filters from the original arXiv paper):
-https://github.com/tensorflow/models/blob/master/research/slim/nets/inception_resnet_v2.py
-Pre-trained ImageNet weights are also converted from TF-slim, which can be found in:
-https://github.com/tensorflow/models/tree/master/research/slim#pre-trained-models
-# Reference
-- [Inception-v4, Inception-ResNet and the Impact of
-   Residual Connections on Learning](https://arxiv.org/abs/1602.07261)
-"""
-
-# Origininally created and maintained by F. Chollet as part of Keras application library.
-# Modified for use as a fully convolutional network by Jordan Croom
-from __future__ import print_function
-from __future__ import absolute_import
-
-import warnings
-
-from keras.models import Model
-from keras.layers import Activation
-from keras.layers import AveragePooling2D
-from keras.layers import BatchNormalization
-from keras.layers import Concatenate
-from keras.layers import Conv2D
-from keras.layers import Dense
-from keras.layers import GlobalAveragePooling2D
-from keras.layers import GlobalMaxPooling2D
-from keras.layers import Input
-from keras.layers import Lambda
-from keras.layers import MaxPooling2D
-from keras.utils.data_utils import get_file
-from keras.engine.topology import get_source_inputs
-from keras import imagenet_utils
-from keras.imagenet_utils import _obtain_input_shape
-from keras.imagenet_utils import decode_predictions
-from keras import backend as K
-
-from keras.applications import inception_resnet_v2
+from . import inception_resnet_v2
 
 
 def InceptionResNetV2_FCN(weights = None,
