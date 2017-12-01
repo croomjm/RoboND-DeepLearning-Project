@@ -1,10 +1,11 @@
 from .inception_resnet_v2 import InceptionResNetV2
 
 
-def InceptionResNetV2_FCN(weights = None,
-                          input_tensor = None,
-                          input_shape = None,
-                          classes = 1000):
+def InceptionResNetV2_FCN(shape,
+                          num_classes,
+                          model_weights = 'None',
+                          inputs = None,
+                          ):
     """ Initializes the Inception-ResNet v2 architecture based FCN.
     Optionally loads the weights pre-trained on ImageNet for the convolutional layers
     prior to center 1x1 convolutional filter.
@@ -13,11 +14,11 @@ def InceptionResNetV2_FCN(weights = None,
 
     # initialize conv network using built in application library
     InceptionResNetV2_model = InceptionResNetV2(include_top = False,
-                                                weights = 'None',
+                                                weights = model_weights,
                                                 input_tensor = inputs,
-                                                input_shape = (256,256,3),
+                                                input_shape = shape,
                                                 pooling = None,
-                                                classes = 3)
+                                                classes = num_classes)
 
     print('Printing Inception Resnet V2 model layers...')
     for layer in InceptionResNetV2_model.layers:
@@ -51,3 +52,6 @@ def InceptionResNetV2_FCN(weights = None,
     # fully connected layer to output image size
     return layers.Conv2D(num_classes, 3, activation='softmax', padding='same')(x)
     """
+
+if __name__ == '__main__':
+    InceptionResNetV2_FCN((256,256,3), 3)
