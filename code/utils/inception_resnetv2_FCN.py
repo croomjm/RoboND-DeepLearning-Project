@@ -1,11 +1,10 @@
-from .inception_resnet_v2 import InceptionResNetV2
+from inception_resnet_v2 import InceptionResNetV2
 
 
 def InceptionResNetV2_FCN(shape,
                           num_classes,
                           model_weights = 'None',
-                          inputs = None,
-                          ):
+                          inputs = None):
     """ Initializes the Inception-ResNet v2 architecture based FCN.
     Optionally loads the weights pre-trained on ImageNet for the convolutional layers
     prior to center 1x1 convolutional filter.

@@ -577,7 +577,7 @@ def resize_images_bilinear(x, height_factor, width_factor, data_format):
     raise ValueError('Invalid data_format:', data_format)
 
 
-class BilinearUpSampling2D(Layer):
+class BilinearUpSampling2D(Layer, size_mult = (2,2)):
   """Upsampling layer for 2D inputs.
   Repeats the rows and columns of the data
   by size[0] and size[1] respectively.
@@ -608,7 +608,7 @@ class BilinearUpSampling2D(Layer):
           `(batch, channels, upsampled_rows, upsampled_cols)`
   """
 
-  def __init__(self, size=(2, 2), data_format=None, **kwargs):
+  def __init__(self, size=size_mult, data_format=None, **kwargs):
     super(BilinearUpSampling2D, self).__init__(**kwargs)
     self.data_format = conv_utils.normalize_data_format(data_format)
     self.size = conv_utils.normalize_tuple(size, 2, 'size')

@@ -123,8 +123,10 @@ def train_val_curve(save_graphs, train_loss, val_loss=None):
         save_path = '../data/run_loss_graphs'
         timestamp = time.strftime("%Y%m%d-%H%M%S")
         plt.savefig(save_path + '/train_val_curve_{}.png'.format(timestamp))
+        plt.close()
     else:
         plt.show()
+
 
 # modified from the BaseLogger in file linked below
 # https://github.com/fchollet/keras/blob/master/keras/callbacks.py

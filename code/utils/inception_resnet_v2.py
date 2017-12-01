@@ -31,9 +31,9 @@ from tensorflow.contrib.keras.python.keras.layers import Lambda
 from tensorflow.contrib.keras.python.keras.layers import MaxPooling2D
 from tensorflow.contrib.keras.python.keras.utils.data_utils import get_file
 from tensorflow.contrib.keras.python.keras.engine.topology import get_source_inputs
-from tensorflow.contrib.keras.python.keras import imagenet_utils
-from tensorflow.contrib.keras.python.keras.imagenet_utils import _obtain_input_shape
-from tensorflow.contrib.keras.python.keras.imagenet_utils import decode_predictions
+from tensorflow.contrib.keras.python.keras.applications import imagenet_utils
+from tensorflow.contrib.keras.python.keras.applications.imagenet_utils import _obtain_input_shape
+from tensorflow.contrib.keras.python.keras.applications.imagenet_utils import decode_predictions
 from tensorflow.contrib.keras.python.keras import backend as K
 
 
