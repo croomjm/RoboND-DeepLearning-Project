@@ -47,11 +47,15 @@ def decoder_block(small_ip_layer, large_ip_layer, filters):
     # TODO Upsample the small input layer using the bilinear_upsample() function.
     upsampled = bilinear_upsample(small_ip_layer)
     
-    # TODO Concatenate the upsampled and large input layers using layers.concatenate
-    concatenated = layers.concatenate([upsampled, large_ip_layer])
+    if large_ip_layer != None:
+        # TODO Concatenate the upsampled and large input layers using layers.concatenate
+        concatenated = layers.concatenate([upsampled, large_ip_layer])
     
-    # TODO Add some number of separable convolution layers
-    output_layer = separable_conv2d_batchnorm(concatenated, filters)
+        # TODO Add some number of separable convolution layers
+        output_layer = separable_conv2d_batchnorm(concatenated, filters)
+
+    else:
+        output_layer = separable_conv2d_batchnorm(upsampled, filters)
     
     return output_layer
 
