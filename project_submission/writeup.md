@@ -6,8 +6,8 @@
 
 The readme below summarizes my approach to the Udacity Robotics Software Engineering Nanodegree deep learning project ("Follow Me"). Details of the project and supplied code are described [here](./Udacity_README.md). The project required using images gathered from a Udacity-coded simulated UAV within Unity game engine of numerous simulated pedestrians and one target simulated pedestrian ("the hero"). Images gathered in the simulation were saved locally along with masks identifying whether pixels belonged to a pedestrian, the hero, or the background. After gathering a training image set, I trained the neural network built using the python Tensorflow module in AWS EC2. My specific approach and results are summarized below.
 
-[image_0]: ./docs/misc/sim_screenshot.png
-![alt text][image_0]
+[image_0]: ../docs/misc/sim_screenshot.png
+![Image from simulation][image_0]
 
 ## 1. Program Structure
    My first step in this project was to modify the organization of the project code so I could more easily test a variety of settings on AWS without having to start each run manually. I chose to break the primary functions of the code into a few files:
