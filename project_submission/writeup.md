@@ -4,6 +4,10 @@
 
 # Project: Follow Me (Deep Learning)
 
+The readme below summarizes my approach to the Udacity Robotics Software Engineering Nanodegree deep learning project ("Follow Me"). Details of the project and supplied code are described [here](./Udacity_README.md). The project required using images gathered from a Udacity-coded simulated UAV within Unity game engine of numerous simulated pedestrians and one target simulated pedestrian ("the hero"). Images gathered in the simulation were saved locally along with masks identifying whether pixels belonged to a pedestrian, the hero, or the background. After gathering a training image set, I trained the neural network built using the python Tensorflow module in AWS EC2. My specific approach and results are summarized below.
+
+[![Udacity - Robotics NanoDegree Program](https://s3-us-west-1.amazonaws.com/udacity-robotics/Extra+Images/RoboND_flag.png)](https://www.udacity.com/robotics)
+
 ## 1. Program Structure
    My first step in this project was to modify the organization of the project code so I could more easily test a variety of settings on AWS without having to start each run manually. I chose to break the primary functions of the code into a few files:
    * [AWS_training_dispatcher.py](https://github.com/croomjm/RoboND-DeepLearning-Project/blob/master/code/AWS_training_dispatcher.py): This is the high level training run dispatcher. It sets the hyper parameters for each run, generates the weights file name from the parameters, and calls the `train_model()` function from AWS_training_utils.py.
