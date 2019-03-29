@@ -1,12 +1,12 @@
 [//]: # (Image References)
-[model_architecture]:./images/Network_architecture.png
-[image_downsampling]: ./images/image_downsampling.png
+[model_architecture]:./project_submission/images/Network_architecture.png
+[image_downsampling]: ./project_submission/images/image_downsampling.png
 
 # Project: Follow Me (Deep Learning)
 
 The readme below summarizes my approach to the Udacity Robotics Software Engineering Nanodegree deep learning project ("Follow Me"). Details of the project and supplied code are described [here](./Udacity_README.md). The project required using images gathered from a Udacity-coded simulated UAV within Unity game engine of numerous simulated pedestrians and one target simulated pedestrian ("the hero"). Images gathered in the simulation were saved locally along with masks identifying whether pixels belonged to a pedestrian, the hero, or the background. After gathering a training image set, I trained the neural network built using the python Tensorflow module in AWS EC2. My specific approach and results are summarized below.
 
-[image_0]: ../docs/misc/sim_screenshot.png
+[image_0]: ./docs/misc/sim_screenshot.png
 ![Image from simulation][image_0]
 
 ## 1. Program Structure
